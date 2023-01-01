@@ -125,11 +125,41 @@ class HeapQueue {
         return not_in_heap(node);
     }
 
-    /** trim off the storage that is not in use. */
-    trim() {
-        if (this.arr.length > this.ln) {
-            this.arr.length = this.ln;
+    /** trim off the storage that is not in use. the storage is an Array,
+     * and the length is set to max(n,m), if length > max(n,m), where m
+     * is the number of nodes in this queue. if length &lt;= max(n,m),
+     * length will not be changed. that is, the Array will be trimmed to just
+     * contain the nodes, but the length is at least n. if length &lt;= n,
+     * no trim.
+     * @param n - the target length of the storage.
+     * @return - trimmed length, (length - max(n,m)). if 0 or negative,
+     *     no trim. */
+    trim(n = -1) {
+        var ln = this.ln > n ? this.ln : n,
+            q = this.arr.length - ln;
+        if (q > 0) {
+            this.arr.length = ln;
         }
+        return q;
+    }
+
+    /** pad the storage with 'null'. the storage is an Array,
+     * and (n - length) 'null'-s are added to the end of the Array,
+     * so that the length of the Array is at least n. if length >= n,
+     * nothing will be added.
+     * @param n - the target length of the storage. n <= .MAX_SAFE_SIZE
+     * @return - the number of added 'null'-s, (n - length). if 0 or negative,
+     *     no 'null' was added.
+     * @see MAX_SAFE_SIZE */
+    pad(n) {
+        var arr = this.arr,
+            d = n - arr.length,
+            q = d;
+        while (d > 0) {
+            arr.push(null);
+            --d;
+        }
+        return q;
     }
 }
 

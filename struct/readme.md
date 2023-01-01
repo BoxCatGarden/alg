@@ -68,3 +68,12 @@ finally added back to the TreeList.
 In other words, if a property of the node stores
 the priority, it should not be changed while the
 node is in a structure based on that property.
+
+# MAX_SAFE_SIZE
+
+The MAX_SAFE_SIZE of a structure is a theoretical
+safe number, via the analysis of the algorithm
+and the data structures embedded in the target structure.
+However, because of the limitation of the
+embedded data structure and the memory capacity, the actual
+available number can be less than MAX_SAFE_SIZE.
